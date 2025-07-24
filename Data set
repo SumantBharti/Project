@@ -1,0 +1,61 @@
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.tree import plot_tree
+
+# Load the iris dataset
+data = load_iris()
+X = data.data
+y = data.target
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train the classifier
+classifier = DecisionTreeClassifier()
+classifier.fit(X_train, y_train)
+
+# Make predictions
+predictions = classifier.predict(X_test)
+accuracy = accuracy_score(y_test, predictions)
+print("Accuracy:", accuracy)
+
+# Plot the decision tree
+plt.figure(figsize=(15, 10))
+plot_tree(classifier, feature_names=data.feature_names, class_names=data.target_names, filled=True)
+plt.title("Decision Tree Classifier")
+plt.show()
+
+
+
+
+
+
+
+
+
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+# Simulate image data: 1000 images of size 64x64x3 (RGB)
+images = np.random.rand(1000, 64, 64, 3)
+
+# Simulate labels: 1000 labels (e.g., for binary classification)
+labels = np.random.randint(0, 2, size=(1000,))
+
+# Split the data into training and temporary sets (70% training, 30% temp)
+X_train, X_temp, y_train, y_temp = train_test_split(
+    images, labels, test_size=0.3, random_state=42
+)
+
+# Split the temporary set into validation and test sets (15% each)
+X_val, X_test, y_val, y_test = train_test_split(
+    X_temp, y_temp, test_size=0.5, random_state=42
+)
+
+# Print the sizes of each set
+print(f"Training set: {len(X_train)} images")
+print(f"Validation set: {len(X_val)} images")
+print(f"Test set: {len(X_test)} images")

@@ -1,0 +1,48 @@
+import pandas as pd
+
+# Step 1: Load the data (replace with actual CSV path if needed)
+# Example if using CSV: df = pd.read_csv('real_estate_data.csv')
+
+# Sample Data (based on your image, truncated here for example)
+data = {
+    "size": [2979, 1521, 2300, 2438, 3266],
+    "location": ["suburban", "urban", "urban", "urban", "suburban"],
+    "bedrooms": [5, 3, 5, 1, 3],
+    "bathrooms": [1, 4, 4, 2, 4],
+    "age": [40, 8, 3, 25, 13],
+    "price": [615253, 496595, 747087, 719168, 695981]
+}
+
+df = pd.DataFrame(data)
+
+# Step 2: Basic structure and summary
+print("Dataset Preview:\n", df.head(), "\n")
+print("Shape of data:", df.shape)
+print("\nData Types:\n", df.dtypes)
+print("\nMissing Values:\n", df.isnull().sum())
+print("\nStatistical Summary:\n", df.describe())
+
+# Step 3: Convert categorical data to lowercase (optional cleaning)
+df['location'] = df['location'].str.lower().str.strip()
+
+# Step 4: Convert location to category type
+df['location'] = df['location'].astype('category')
+
+# Step 5: Check for duplicates
+duplicates = df.duplicated()
+print("\nDuplicate Rows Count:", duplicates.sum())
+
+# Step 6: Remove duplicates (if any)
+df = df.drop_duplicates()
+
+# Step 7: Sort by price (optional)
+df = df.sort_values(by='price', ascending=False)
+
+# Step 8: Reset index after cleaning
+df = df.reset_index(drop=True)
+
+# Step 9: Final Cleaned Data
+print("\nCleaned and Prepared Data:\n", df.head())
+
+# Optional: Save to CSV
+# df.to_csv("cleaned_real_estate_data.csv", index=False)
